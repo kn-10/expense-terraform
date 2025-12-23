@@ -4,3 +4,14 @@ resource "aws_vpc" "main" {
     Name = "${var.env}-${var.project_name}-vpc"
   }
 }
+
+resource "aws_subnet" "main" {
+  count = length(var.vpc_cidr)
+  vpc_id     = aws_vpc.main.id
+  cidr_block = element(var.subnets_cidr,count.index)
+  availability_zone = element(var.az,count.index)
+
+  tags = {
+    Name = "subnet-${count.index}"
+  }
+}
