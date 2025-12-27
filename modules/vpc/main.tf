@@ -28,7 +28,23 @@ resource "aws_subnet" "public" {
   availability_zone = element(var.az,count.index)
 
   tags = {
-    Name = "public_subnet-${count.index+1}"
+    Name = "public-subnet-${count.index+1}"
+  }
+}
+
+resource "aws_route_table" "public" {
+  count = length(var.public_subnets_cidr)
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
+  }
+
+
+
+  tags = {
+    Name = "public-rt-${count.index+1}"
   }
 }
 
@@ -39,7 +55,7 @@ resource "aws_subnet" "private" {
   availability_zone = element(var.az,count.index)
 
   tags = {
-    Name = "private_subnet-${count.index+1}"
+    Name = "private-subnet-${count.index+1}"
   }
 }
 
