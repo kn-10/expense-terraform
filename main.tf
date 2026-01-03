@@ -109,6 +109,7 @@ module "public-alb" {
   subnets        = module.vpc.public_subnets_id
   vpc_id         = module.vpc.vpc_id
   acm_arn        = var.acm_arn
+  target_group_arn = module.frontend.target_group_arn
 }
 
 
@@ -124,5 +125,6 @@ module "private-alb" {
   subnets        = module.vpc.app_subnets_id
   vpc_id         = module.vpc.vpc_id
   acm_arn        = var.acm_arn
+  target_group_arn = module.backend.target_group_arn
 }
 
