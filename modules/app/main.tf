@@ -32,18 +32,17 @@ resource "aws_security_group" "main" {
 
 
 resource "aws_launch_template" "main" {
-  name_prefix   = "${local.name}-lt"
-  image_id      = data.aws_ami.centos8.image_id
-  instance_type = var.instance_type
+  name_prefix            = "${local.name}-lt"
+  image_id               = data.aws_ami.centos8.image_id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
 }
 
 resource "aws_autoscaling_group" "main" {
   name = "${local.name}-asg"
-  availability_zones = ["us-east-1a"]
-  desired_capacity   = var.instance_capacity
-  max_size           = var.instance_capacity  ##TBD, We will finetune after autoscaling
-  min_size           = var.instance_capacity
+  desired_capacity    = var.instance_capacity
+  max_size            = var.instance_capacity  ##TBD, We will finetune after autoscaling
+  min_size            = var.instance_capacity
   vpc_zone_identifier = var.vpc_zone_identifier
 
   launch_template {
