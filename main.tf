@@ -120,7 +120,7 @@ module "private-alb" {
 
   env            = var.env
   project_name   = var.project_name
-  subnets        = module.vpc.public_subnets_id
+  subnets        = module.vpc.app_subnets_id
   vpc_id         = module.vpc.vpc_id
 }
 
