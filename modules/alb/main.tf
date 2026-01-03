@@ -40,7 +40,7 @@ resource "aws_lb" "main" {
   subnets            = var.subnets
 
   tags = {
-    Environment = local.name
+    Name = local.name
   }
 }
 
