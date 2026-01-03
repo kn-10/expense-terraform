@@ -62,7 +62,7 @@ module "rds" {
   project_name         = var.project_name
   kms_key_id           = var.kms_key_id
 
-  subnet_ids           = module.vpc.app_subnets_id
+  subnet_ids           = module.vpc.app_subnets_ids
   vpc_id               = module.vpc.vpc_id
   sg_cidr_blocks       = var.app_subnets_cidr
 
@@ -114,7 +114,7 @@ module "public-alb" {
 module "private-alb" {
   source = "./modules/alb"
 
-  alb_name       = "public"
+  alb_name       = "private"
   internal       = true
   sg_cidr_blocks = var.web_subnets_cidr
 
