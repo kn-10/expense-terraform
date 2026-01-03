@@ -5,4 +5,4 @@ variable "internal" {}
 variable "vpc_id" {}
 variable "sg_cidr_blocks" {}
 variable "subnets" {}
-
+variable "acm_arn" {}
