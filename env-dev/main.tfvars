@@ -1,7 +1,7 @@
 env ="dev"
 project_name = "expense"
 kms_key_id = "arn:aws:kms:us-east-1:367241114876:key/b0eaa327-c037-47e6-93ed-78b8b08219b9"
-
+bastion_cidrs = ["172.31.65.60/32"]
 # vpc = {
 #   main = {
 #     vpc_cidr = "10.10.0.0/21"
@@ -37,5 +37,10 @@ rds_engine            = "mysql"
 rds_engine_version    = "5.7"
 rds_instance_class    = "db.t3.micro"
 rds_family            = "mysql5.7"
+
+
+backend_app_port = 8080
+backend_instance_capacity = 1
+backend_instance_type = "t3.small"
 
 

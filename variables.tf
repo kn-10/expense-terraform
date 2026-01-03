@@ -13,3 +13,7 @@ variable "rds_engine" {}
 variable "rds_engine_version" {}
 variable "rds_instance_class" {}
 variable "rds_family" {}
+variable "backend_app_port" {}
+variable "bastion_cidrs" {}
+variable "backend_instance_capacity" {}
+variable "backend_instance_type" {}
