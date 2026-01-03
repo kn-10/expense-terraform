@@ -1,6 +1,6 @@
 resource "aws_security_group" "main" {
   name        = "${local.name}-sg"
-  description = "${local.name}-sg"
+  description = "${local.name}-rds-sg"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -15,7 +15,7 @@ resource "aws_security_group" "main" {
     to_port          = var.app_port
     protocol         = "tcp"
     cidr_blocks      = var.sg_cidr_blocks
-    description      = "APP_PORT"
+    description      = "APPPORT"
   }
   egress {
     from_port        = 0
@@ -33,7 +33,7 @@ resource "aws_security_group" "main" {
 
 resource "aws_launch_template" "main" {
   name_prefix   = "${local.name}-lt"
-  image_id      = data.aws_ami.example.image_id
+  image_id      = data.aws_ami.centos8.image_id
   instance_type = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
 }
@@ -44,6 +44,7 @@ resource "aws_autoscaling_group" "main" {
   desired_capacity   = var.instance_capacity
   max_size           = var.instance_capacity  ##TBD, We will finetune after autoscaling
   min_size           = var.instance_capacity
+  vpc_zone_identifier = var.vpc_zone_identifier
 
   launch_template {
     id      = aws_launch_template.main.id
@@ -51,9 +52,9 @@ resource "aws_autoscaling_group" "main" {
   }
 
 
-tag {
-  key                 = "Name"
-  value               = local.name
-  propagate_at_launch = true
- }
+  tag {
+    key                 = "Name"
+    value               = local.name
+    propagate_at_launch = true
+  }
 }
