@@ -97,6 +97,30 @@ module "frontend" {
   vpc_zone_identifier = module.vpc.web_subnets_id
 }
 
+module "public-alb" {
+  source = "./modules/alb"
+
+  alb_name       = "public"
+  sg_cidr_blocks = ["0.0.0.0/0"]
+  internal       = false
+
+  env            = var.env
+  project_name   = var.project_name
+  subnets        = module.vpc.public_subnets_id
+  vpc_id         = module.vpc.vpc_id
+}
 
 
+module "private-alb" {
+  source = "./modules/alb"
+
+  alb_name       = "public"
+  internal       = true
+  sg_cidr_blocks = var.web_subnets_cidr
+
+  env            = var.env
+  project_name   = var.project_name
+  subnets        = module.vpc.public_subnets_id
+  vpc_id         = module.vpc.vpc_id
+}
 
