@@ -103,6 +103,8 @@ module "public-alb" {
   alb_name       = "public"
   sg_cidr_blocks = ["0.0.0.0/0"]
   internal       = false
+  dns_name       = "frontend"
+  zone_id        = var.zone_id
 
   env            = var.env
   project_name   = var.project_name
@@ -119,6 +121,8 @@ module "private-alb" {
   alb_name       = "private"
   internal       = true
   sg_cidr_blocks = var.web_subnets_cidr
+  dns_name       = "backend"
+  zone_id        = var.zone_id
 
   env            = var.env
   project_name   = var.project_name
