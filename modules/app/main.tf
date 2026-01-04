@@ -41,7 +41,7 @@ resource "aws_launch_template" "main" {
 resource "aws_autoscaling_group" "main" {
   name = "${local.name}-asg"
   desired_capacity    = var.instance_capacity
-  max_size            = var.instance_capacity  ##TBD, We will finetune after autoscaling
+  max_size            = var.instance_capacity  ##TBD, We will fine tune after autoscaling
   min_size            = var.instance_capacity
   vpc_zone_identifier = var.vpc_zone_identifier
   target_group_arns = [aws_lb_target_group.main.arn]
