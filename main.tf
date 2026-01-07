@@ -72,29 +72,31 @@ module "backend" {
   source = "./modules/app"
 
   app_port = var.backend_app_port
-  bastion_cidrs = var.bastion_cidrs
-  component = "backend"
-  env = var.env
-  instance_capacity = var.backend_instance_capacity
-  instance_type = var.backend_instance_type
-  project_name = var.project_name
-  sg_cidr_blocks = var.app_subnets_cidr # This needs to be checked
-  vpc_id = module.vpc.vpc_id
+  bastion_cidrs       = var.bastion_cidrs
+  component           = "backend"
+  env                 = var.env
+  instance_capacity   = var.backend_instance_capacity
+  instance_type       = var.backend_instance_type
+  project_name        = var.project_name
+  sg_cidr_blocks      = var.app_subnets_cidr # This needs to be checked
+  vpc_id              = module.vpc.vpc_id
   vpc_zone_identifier = module.vpc.app_subnets_id
+  parameter           = ["arn:aws:ssm:us-east-1:367241114876:parameter/{var.env}.{var.project_name}.rds.*"]
 }
 module "frontend" {
   source = "./modules/app"
 
-  app_port = var.frontend_app_port
-  bastion_cidrs = var.bastion_cidrs
-  component = "frontend"
-  env = var.env
-  instance_capacity = var.frontend_instance_capacity
-  instance_type = var.frontend_instance_type
-  project_name = var.project_name
-  sg_cidr_blocks = var.public_subnets_cidr # This needs to be checked
-  vpc_id = module.vpc.vpc_id
+  app_port            = var.frontend_app_port
+  bastion_cidrs       = var.bastion_cidrs
+  component           = "frontend"
+  env                 = var.env
+  instance_capacity   = var.frontend_instance_capacity
+  instance_type       = var.frontend_instance_type
+  project_name        = var.project_name
+  sg_cidr_blocks      = var.public_subnets_cidr # This needs to be checked
+  vpc_id              = module.vpc.vpc_id
   vpc_zone_identifier = module.vpc.web_subnets_id
+  parameter           = []
 }
 
 module "public-alb" {
