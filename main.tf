@@ -82,6 +82,7 @@ module "backend" {
   vpc_id              = module.vpc.vpc_id
   vpc_zone_identifier = module.vpc.app_subnets_id
   parameters           = ["arn:aws:ssm:us-east-1:367241114876:parameter/{var.env}.{var.project_name}.rds.*"]
+  kms                 = var.kms_key_id
 }
 module "frontend" {
   source = "./modules/app"
@@ -97,6 +98,7 @@ module "frontend" {
   vpc_id              = module.vpc.vpc_id
   vpc_zone_identifier = module.vpc.web_subnets_id
   parameters          = []
+  kms                 = var.kms_key_id
 }
 
 module "public-alb" {
