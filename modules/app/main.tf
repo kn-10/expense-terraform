@@ -119,7 +119,7 @@ resource "aws_iam_role" "main" {
           ], var.parameters)
         },
         {
-          "Sid": "VisualEditor1",
+          "Sid": "DescribeParameters",
           "Effect": "Allow",
           "Action": "ssm:DescribeParameters",
           "Resource": "*"
