@@ -82,7 +82,7 @@ module "backend" {
   sg_cidr_blocks      = var.app_subnets_cidr # This needs to be checked
   vpc_id              = module.vpc.vpc_id
   vpc_zone_identifier = module.vpc.app_subnets_id
-  parameters          = ["arn:aws:ssm:us-east-1:367241114876:parameter/{var.env}.{var.project_name}.rds.*"]
+  parameters          = ["arn:aws:ssm:us-east-1:367241114876:parameter/${var.env}.${var.project_name}.rds.*"]
   kms                 = var.kms_key_id
 }
 module "frontend" {
