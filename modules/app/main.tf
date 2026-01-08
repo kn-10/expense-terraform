@@ -41,7 +41,7 @@ resource "aws_launch_template" "main" {
     env          = var.env
   }))
 
-    iam_instance_profile {
+  iam_instance_profile {
     name = aws_iam_instance_profile.main.name
   }
 
@@ -50,9 +50,9 @@ resource "aws_launch_template" "main" {
 
     ebs {
       volume_size = 10
-      encrypted = "true"
+      encrypted = true
       kms_key_id = var.kms
-      delete_on_termination = "true"
+      delete_on_termination = true
     }
   }
 }
@@ -121,18 +121,17 @@ resource "aws_iam_role" "main" {
           "Action": [
             "kms:Decrypt",
             "ssm:GetParameterHistory",
-            "ssm:DescribeDocumentParameters",
             "ssm:GetParametersByPath",
             "ssm:GetParameters",
             "ssm:GetParameter"
           ],
           "Resource": concat([
             "arn:aws:kms:us-east-1:367241114876:key/b0eaa327-c037-47e6-93ed-78b8b08219b9",
-            "arn:aws:ssm:us-east-1:367241114876:parameter/{var.env}.{var.project_name}.{var.component}.*"
+            "arn:aws:ssm:us-east-1:367241114876:parameter/${var.env}.${var.project_name}.${var.component}.*"
           ], var.parameters)
         },
         {
-          "Sid": "DescribeParameters",
+          "Sid": "DescribeAllParameters",
           "Effect": "Allow",
           "Action": "ssm:DescribeParameters",
           "Resource": "*"
